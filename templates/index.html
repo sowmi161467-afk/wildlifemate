@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WildlifeMate AI | Wildlife Study Assistant</title>
+<style>
+:root{--bg:#07130f;--panel:#10271d;--border:rgba(210,255,220,.11);--text:#f2fff3;--muted:#9eb5a2;--accent:#72d572}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",sans-serif;background:radial-gradient(circle at 12% 12%,rgba(114,213,114,.14),transparent 30%),radial-gradient(circle at 88% 15%,rgba(54,184,138,.13),transparent 30%),#07130f;overflow:hidden}
+body:before{content:"";position:fixed;inset:0;opacity:.28;background-image:radial-gradient(circle,white 1px,transparent 1px);background-size:105px 105px;pointer-events:none}
+.app{position:relative;z-index:1;width:min(1200px,calc(100% - 32px));height:min(860px,calc(100vh - 32px));margin:16px auto;display:grid;grid-template-columns:290px 1fr;overflow:hidden;border:1px solid var(--border);border-radius:30px;background:rgba(6,19,13,.86);backdrop-filter:blur(22px);box-shadow:0 28px 80px #0008}
+.sidebar{padding:27px 20px;border-right:1px solid var(--border);background:linear-gradient(180deg,#0f2b1e,#06130d);display:flex;flex-direction:column}
+.brand{display:flex;align-items:center;gap:12px;margin-bottom:29px}.brand-icon{width:50px;height:50px;display:grid;place-items:center;border-radius:17px;font-size:27px;background:#72d57218;border:1px solid var(--border)}.brand h1{margin:0;font-size:17px}.brand span{color:var(--muted);font-size:11px}
+.new-chat{border:0;padding:13px 15px;margin-bottom:22px;border-radius:15px;color:#06140d;background:linear-gradient(135deg,#8ee68e,#43c695);font-weight:800;cursor:pointer}
+.section-label{margin:8px 10px;color:#6f8c79;font-size:10px;font-weight:800;letter-spacing:1.4px;text-transform:uppercase}.side-item{margin:2px 0;padding:12px 13px;border-radius:12px;color:var(--muted);font-size:13px}.side-item.active{color:#eaffeb;background:#72d57212;border:1px solid #72d57222}
+.card{margin-top:auto;padding:16px;border:1px solid var(--border);border-radius:19px;background:#ffffff06}.card strong{display:block;font-size:13px;margin-bottom:5px}.card p{margin:0;color:var(--muted);font-size:11px;line-height:1.6}
+.main{min-width:0;display:flex;flex-direction:column}.topbar{height:76px;padding:0 25px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border)}.status{display:flex;align-items:center;gap:10px}.dot{width:9px;height:9px;border-radius:50%;background:#69e19b;box-shadow:0 0 15px #69e19baa}.status strong{display:block;font-size:13px}.status span{color:var(--muted);font-size:11px}.pill{padding:8px 12px;border-radius:999px;color:#b5cbb9;font-size:10px;border:1px solid var(--border)}
+.chat{flex:1;min-height:0;overflow-y:auto;padding:32px clamp(18px,5vw,72px)}.welcome{min-height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}.emblem{width:106px;height:106px;display:grid;place-items:center;margin-bottom:22px;border-radius:50%;font-size:52px;background:radial-gradient(circle at 34% 29%,#b8f0b6,#4f9c63 44%,#1d5035 70%,#0c2519);box-shadow:0 0 40px #72d57233}.welcome h2{margin:0 0 9px;font-size:clamp(25px,4vw,39px);letter-spacing:-1.4px}.welcome p{max-width:600px;margin:0 0 25px;color:var(--muted);line-height:1.7;font-size:13px}.suggestions{display:flex;flex-wrap:wrap;justify-content:center;gap:9px;max-width:730px}.suggestion{padding:10px 13px;border:1px solid var(--border);border-radius:12px;color:#c9dfcd;background:#ffffff06;font-size:11px;cursor:pointer}
+.message{display:flex;margin-bottom:22px}.user{justify-content:flex-end}.bubble{max-width:min(78%,740px);padding:14px 16px;border-radius:18px;font-size:13px;line-height:1.65;white-space:pre-wrap}.user .bubble{background:linear-gradient(135deg,#22533d,#1a4332);border-bottom-right-radius:5px}.assistant .bubble{background:#10291fe6;border:1px solid var(--border);border-bottom-left-radius:5px}
+.composer-wrap{padding:15px 25px 22px}.composer{display:flex;align-items:flex-end;gap:9px;padding:9px;border-radius:20px;border:1px solid var(--border);background:#10271df0}.composer textarea{flex:1;min-height:42px;max-height:130px;resize:none;padding:11px 8px;outline:0;border:0;color:white;background:transparent;font:inherit;font-size:13px}.composer textarea::placeholder{color:#647b6b}.send{width:43px;height:43px;border:0;border-radius:14px;color:#07150d;background:linear-gradient(135deg,#8ee68e,#43c695);cursor:pointer;font-size:18px}.send:disabled{opacity:.45}.hint{margin-top:9px;color:#597263;text-align:center;font-size:9px}.typing i{display:inline-block;width:5px;height:5px;border-radius:50%;background:#a8bda9;margin:0 2px;animation:b 1s infinite}.typing i:nth-child(2){animation-delay:.15s}.typing i:nth-child(3){animation-delay:.3s}@keyframes b{0%,60%,100%{opacity:.25;transform:translateY(0)}30%{opacity:1;transform:translateY(-3px)}}
+@media(max-width:760px){body{overflow:auto}.app{width:100%;height:100vh;margin:0;border-radius:0;grid-template-columns:1fr}.sidebar{display:none}.topbar{padding:0 16px}.chat{padding:24px 16px}.composer-wrap{padding:12px}.bubble{max-width:88%}}
+</style>
+</head>
+<body>
+<div class="app">
+<aside class="sidebar">
+<div class="brand"><div class="brand-icon">🐾</div><div><h1>WildlifeMate AI</h1><span>Explore the wild</span></div></div>
+<button class="new-chat" id="newChat">＋ New Study Chat</button>
+<div class="section-label">Workspace</div>
+<div class="side-item active">✦ Wildlife Assistant</div>
+<div class="side-item">◈ Animal Science</div>
+<div class="side-item">◇ Exam Preparation</div>
+<div class="section-label" style="margin-top:22px">Explore</div>
+<div class="side-item">🦁 Wild Animals</div>
+<div class="side-item">🌿 Habitats & Ecosystems</div>
+<div class="side-item">🌍 Conservation</div>
+<div class="card"><strong>🌱 Wildlife Focus</strong><p>Learn about animals, biodiversity, habitats and conservation through clear study-friendly explanations.</p></div>
+</aside>
+<main class="main">
+<header class="topbar"><div class="status"><span class="dot"></span><div><strong>WildlifeMate AI</strong><span>Online · Wildlife study assistant</span></div></div><div class="pill">Gemini 3.1 Flash-Lite</div></header>
+<section class="chat" id="chat"><div class="welcome" id="welcome"><div class="emblem">🦋</div><h2>Explore the world of wildlife.</h2><p>Ask about animals, habitats, biodiversity, adaptations, endangered species, ecosystems and wildlife conservation.</p><div class="suggestions"><button class="suggestion">Why are tigers endangered?</button><button class="suggestion">Explain food chains with an example</button><button class="suggestion">How do animals adapt to deserts?</button><button class="suggestion">What is biodiversity?</button></div></div></section>
+<div class="composer-wrap"><div class="composer"><textarea id="message" rows="1" placeholder="Ask a wildlife or animal study question..."></textarea><button class="send" id="send">➤</button></div><div class="hint">WildlifeMate AI is designed only for wildlife, animals and conservation learning.</div></div>
+</main></div>
+<script>
+const chat=document.getElementById("chat"),input=document.getElementById("message"),send=document.getElementById("send"),newChat=document.getElementById("newChat");let loading=false;
+function addMessage(text,role){document.getElementById("welcome")?.remove();const m=document.createElement("div");m.className="message "+role;const b=document.createElement("div");b.className="bubble";b.textContent=text;m.appendChild(b);chat.appendChild(m);chat.scrollTop=chat.scrollHeight}
+function typing(){const m=document.createElement("div");m.className="message assistant";m.id="typing";m.innerHTML='<div class="bubble typing"><i></i><i></i><i></i></div>';chat.appendChild(m);chat.scrollTop=chat.scrollHeight}
+async function sendMessage(){const message=input.value.trim();if(!message||loading)return;loading=true;send.disabled=true;addMessage(message,"user");input.value="";input.style.height="42px";typing();try{const r=await fetch("/api/chat",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({message})});const d=await r.json();document.getElementById("typing")?.remove();addMessage(r.ok?d.answer:(d.error||"Something went wrong."),"assistant")}catch(e){document.getElementById("typing")?.remove();addMessage("I couldn't reach WildlifeMate AI right now. Please try again.","assistant")}finally{loading=false;send.disabled=false;input.focus()}}
+function suggestions(){document.querySelectorAll(".suggestion").forEach(b=>b.onclick=()=>{input.value=b.textContent;sendMessage()})}
+input.oninput=()=>{input.style.height="42px";input.style.height=Math.min(input.scrollHeight,130)+"px"};input.onkeydown=e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();sendMessage()}};send.onclick=sendMessage;
+newChat.onclick=()=>{location.reload()};suggestions();
+</script>
+</body>
+</html>
